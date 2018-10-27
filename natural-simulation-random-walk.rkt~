@@ -1,6 +1,5 @@
 #lang racket
 (require 2htdp/image)
-(require 2htdp/universe)
 
 (define walker '(50 50))
 
@@ -17,21 +16,21 @@
   '())
 
 (define (move-north walker)
-  (cons (+ 3  (first walker))
+  (cons (add1 (first walker))
         (rest walker)))
 
 (define (move-south walker)
-  (cons (- 3 (first walker))
+  (cons (sub1 (first walker))
         (rest walker)))
 
 (define (move-west walker)
   (cons (first walker)
-        (cons (+ 3 (first (rest walker)) )
+        (cons (add1 (first (rest walker)))
               (rest (rest walker)))))
 
 (define (move-east walker)
   (cons (first walker)
-        (cons (- 3 (first (rest walker)))
+        (cons (add1 (first (rest walker)))
               (rest (rest walker)))))
 
 (define (step walker)
@@ -51,9 +50,4 @@
   (place-image (circle 5 "solid" "black") (get-x-walker walker) (get-y-walker walker) (empty-scene 200 200)))
 
 ;(send frame show #t))
-(define (f n)
-  (let ([w (step walker)])
-    (begin (set! walker w)
-           (draw-world walker))))
-
-(animate f)
+(run-simulation walker 10)
